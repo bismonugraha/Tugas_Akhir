@@ -13,11 +13,22 @@ $NegasiK7 = 5;
 $query = "SELECT  tbl_pakar1.*, tbl_pakar2.*, tbl_pakar3.* FROM tbl_proses_penilaian
 INNER JOIN tbl_pakar1 ON tbl_proses_penilaian.id_pakar1 = tbl_pakar1.id_alternatif
 INNER JOIN tbl_pakar2 ON tbl_proses_penilaian.id_pakar2 = tbl_pakar2.id_alternatif
-INNER JOIN tbl_pakar3 ON tbl_proses_penilaian.id_pakar3 = tbl_pakar3.id_alternatif";
+INNER JOIN tbl_pakar3 ON tbl_proses_penilaian.id_pakar3 = tbl_pakar3.id_alternatif 
+WHERE tbl_proses_penilaian.periode= $periode";
 $sql   = mysqli_query($con, $query) or die(mysqli_error($con));
 $no = 1;
 while ($row = mysqli_fetch_array($sql)) {
-    $id = $no++;
+    $carikode = mysqli_query($con, "SELECT id from tbl_proses_memcdm") or die(mysqli_error($con));
+    $datakode = mysqli_fetch_array($carikode);
+    $jumlah_data = mysqli_num_rows($carikode);
+    if ($datakode) {
+        $nilaikode = substr($jumlah_data[0], 1);
+        $kode = (int) $nilaikode;
+        $kode = $jumlah_data + 1;
+        $kode_otomatis = "" . str_pad($kode, 1, "0", STR_PAD_LEFT);
+    } else {
+        $kode_otomatis = "1";
+    }
     // Pakar1
     $NilaiK11 = $row['k11'];
     $NilaiK12 = $row['k12'];
@@ -43,6 +54,7 @@ while ($row = mysqli_fetch_array($sql)) {
     $NilaiK36 = $row['k36'];
     $NilaiK37 = $row['k37'];
     $Alternatif = $row['id_alternatif'];
+    $Periode    = $row['periode'];
     $A_kriteria1 = min((max($NegasiK1, $NilaiK11)),
         (max($NegasiK2, $NilaiK12)),
         (max($NegasiK3, $NilaiK13)),
@@ -71,8 +83,8 @@ while ($row = mysqli_fetch_array($sql)) {
         (min($A_kriteria2, 5)),
         (min($A_kriteria3, 7))
     );
-    $query = mysqli_query($con, "INSERT INTO tbl_proses_memcdm VALUES('$id', '$Alternatif',
-            '$A_kriteria1','$A_kriteria2','$A_kriteria3','$Agregasi_pakar')");
+    $query = mysqli_query($con, "INSERT INTO tbl_proses_memcdm VALUES('$kode_otomatis','$Alternatif',
+            '$Periode','$A_kriteria1','$A_kriteria2','$A_kriteria3','$Agregasi_pakar')");
     if ($query) {
         echo "<script>window.location='" . base_url('views/proses_memcdm.php') . "';</script>";
     } else {

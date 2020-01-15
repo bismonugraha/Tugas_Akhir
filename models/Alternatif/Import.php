@@ -25,19 +25,17 @@ if (isset($_FILES['fileAlternatif']['name']) && in_array($_FILES['fileAlternatif
     $sheetData = $spreadsheet->getActiveSheet()->toArray();
     for ($i = 0; $i < count($sheetData); $i++) {
         $id_alternatif = $sheetData[$i]['0'];
-        $periode = $sheetData[$i]['1'];
-        $alternatif = $sheetData[$i]['2'];
-        $nama_pengurus = $sheetData[$i]['3'];
-        $alamat = $sheetData[$i]['4'];
-        $anak_sd = $sheetData[$i]['5'];
-        $anak_smp = $sheetData[$i]['6'];
-        $anak_sma = $sheetData[$i]['7'];
-        $ibu_hamil = $sheetData[$i]['8'];
-        $balita = $sheetData[$i]['9'];
-        $lansia = $sheetData[$i]['10'];
-        $disabilitas = $sheetData[$i]['11'];
+        $nama_pengurus = $sheetData[$i]['1'];
+        $alamat = $sheetData[$i]['2'];
+        $anak_sd = $sheetData[$i]['3'];
+        $anak_smp = $sheetData[$i]['4'];
+        $anak_sma = $sheetData[$i]['5'];
+        $ibu_hamil = $sheetData[$i]['6'];
+        $balita = $sheetData[$i]['7'];
+        $lansia = $sheetData[$i]['8'];
+        $disabilitas = $sheetData[$i]['9'];
 
-        mysqli_query($con, "INSERT INTO tbl_alternatif(id_alternatif,periode,alternatif,nama_pengurus,alamat,anak_sd,anak_smp,anak_sma,ibu_hamil,balita,lansia,disabilitas) VALUES ('$id_alternatif','$periode','$alternatif','$nama_pengurus','$alamat','$anak_sd','$anak_smp','$anak_sma','$ibu_hamil','$balita','$lansia','$disabilitas')");
+        mysqli_query($con, "INSERT INTO tbl_alternatif(id_alternatif,nama_pengurus,alamat,anak_sd,anak_smp,anak_sma,ibu_hamil,balita,lansia,disabilitas) VALUES ('$id_alternatif','$periode','$alternatif','$nama_pengurus','$alamat','$anak_sd','$anak_smp','$anak_sma','$ibu_hamil','$balita','$lansia','$disabilitas')");
     }
     $_SESSION['message'] = "Data berhasil diimport!";
     $_SESSION['msg_type'] = "success";

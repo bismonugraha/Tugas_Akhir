@@ -11,7 +11,8 @@
             <div class=" card-body">
                 <div class="table-responsive">
                     <?php
-                    $query = "SELECT tbl_alternatif.periode, tbl_alternatif.nama_pengurus, tbl_alternatif.alamat, tbl_proses_memcdm.agregasi_pakar, tbl_skalanilai.tingkat FROM tbl_proses_memcdm
+                    $query = "SELECT tbl_alternatif.nama_pengurus, tbl_alternatif.alamat, 
+                    tbl_proses_memcdm.agregasi_pakar, tbl_skalanilai.tingkat FROM tbl_proses_memcdm
                     INNER JOIN tbl_alternatif ON tbl_proses_memcdm.alternatif= tbl_alternatif.id_alternatif
                     INNER JOIN tbl_skalanilai ON tbl_proses_memcdm.agregasi_pakar= tbl_skalanilai.id ORDER BY agregasi_pakar DESC";
                     $query_run = mysqli_query($con, $query);
@@ -21,7 +22,6 @@
                         <thead>
                             <tr>
                                 <th style='text-align:center'>No</th>
-                                <th style='text-align:center'>Tahun</th>
                                 <th style='text-align:center'>Nama Pengurus</th>
                                 <th style='text-align:center'>Alamat</th>
                                 <th style='text-align:center'>Agregasi Pakar</th>
@@ -32,10 +32,9 @@
                             <?php
                             if ($query_run) {
                                 foreach ($query_run as $data) {
-                                    ?>
+                            ?>
                                     <tr class="text-center">
                                         <td><?= $no++; ?></td>
-                                        <td><?= $data['periode']; ?></td>
                                         <td><?= $data['nama_pengurus']; ?></td>
                                         <td><?= $data['alamat']; ?></td>
                                         <td><?= $data['agregasi_pakar']; ?></td>

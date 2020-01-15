@@ -5,9 +5,9 @@
         if (isset($_SESSION['message'])) : ?>
             <div class="alert alert-<?= $_SESSION['msg_type'] ?> col-md-3 text-center" role="alert">
                 <?php
-                    echo $_SESSION['message'];
-                    unset($_SESSION['message']);
-                    ?>
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -103,7 +103,7 @@
                                     </td>
                             </tr>
                         <?php
-                        }
+                                }
                         ?>
                         </tbody>
                     </table>
@@ -112,22 +112,22 @@
                 if (@$_POST['pencarian'] == '') { ?>
                     <div class="float-left;">
                         <?php
-                            $jml = mysqli_num_rows(mysqli_query($con, $queryJml));
-                            echo "Jumlah Data : <b>$jml</b>";
-                            ?>
+                        $jml = mysqli_num_rows(mysqli_query($con, $queryJml));
+                        echo "Jumlah Data : <b>$jml</b>";
+                        ?>
                     </div>
                     <div class="float-right">
                         <ul class="pagination pagination-sm">
                             <?php
-                                $jml_hal = ceil($jml / $batas);
-                                for ($i = 1; $i <= $jml_hal; $i++) {
-                                    if ($i != $hal) {
-                                        echo "<li><a class=\"page-link\" href=\"?hal1=$i\">$i</a></li>";
-                                    } else {
-                                        echo "<li class=\"page-item active\"><a class=\"page-link\" href=\"?hal1=$i\">$i</a></li>";
-                                    }
+                            $jml_hal = ceil($jml / $batas);
+                            for ($i = 1; $i <= $jml_hal; $i++) {
+                                if ($i != $hal) {
+                                    echo "<li><a class=\"page-link\" href=\"?hal1=$i\">$i</a></li>";
+                                } else {
+                                    echo "<li class=\"page-item active\"><a class=\"page-link\" href=\"?hal1=$i\">$i</a></li>";
                                 }
-                                ?>
+                            }
+                            ?>
                         </ul>
                     </div>
                 <?php
@@ -229,7 +229,22 @@ if ($datakode) {
                                 <input class="form-control" type="text" name="id_pakar3" value="<?= $kode_otomatis; ?>" readonly>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="control-label">Periode</label>
+                                <select for="periode" class="custom-select mr-sm-2" name="periode" id="periode" required>
+                                    <option value="">--Periode--</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="control-label">Alternatif</label>
                                 <select onchange="changeAdd(this.value)" class="custom-select mr-sm-2" name="id_alternatif" id="id_alternatif" required>

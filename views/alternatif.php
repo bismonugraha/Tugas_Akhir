@@ -9,9 +9,9 @@ include_once('../header.php');
         if (isset($_SESSION['message'])) : ?>
             <div class="alert alert-<?= $_SESSION['msg_type'] ?> col-md-3 text-center" role="alert">
                 <?php
-                    echo $_SESSION['message'];
-                    unset($_SESSION['message']);
-                    ?>
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -71,10 +71,9 @@ include_once('../header.php');
                         <thead>
                             <tr>
                                 <th style='text-align:center; vertical-align: middle;' rowspan=' 4'>No</th>
-                                <th style='text-align:center; vertical-align: middle;' rowspan=' 4'>Kode</th>
+                                <th style='text-align:center; vertical-align: middle;' rowspan=' 4'>Alternatif</th>
                                 <th style='text-align:center; vertical-align: middle;' rowspan=' 4'>Nama</th>
                                 <th style='text-align:center; vertical-align: middle;' rowspan=' 4'>Alamat</th>
-                                <th style='text-align:center; vertical-align: middle;' rowspan=' 4'>Periode</th>
                                 <th style='text-align:center' colspan='7'>Jumlah Anggota Keluarga Yang Masuk Kriteria</th>
                                 <th style='text-align:center; vertical-align: middle;' rowspan='4'>Aksi</th>
                             </tr>
@@ -92,13 +91,12 @@ include_once('../header.php');
                             <?php
                             if ($query_run) {
                                 foreach ($query_run as $data) {
-                                    ?>
+                            ?>
                                     <tr class="text-center">
                                         <td><?= $no++; ?></td>
                                         <td><?= $data['id_alternatif']; ?></td>
                                         <td><?= $data['nama_pengurus']; ?></td>
                                         <td><?= $data['alamat']; ?></td>
-                                        <td><?= $data['periode']; ?></td>
                                         <td><?= $data['anak_sd']; ?></td>
                                         <td><?= $data['anak_smp']; ?></td>
                                         <td><?= $data['anak_sma']; ?></td>
@@ -114,32 +112,18 @@ include_once('../header.php');
                                     </tr>
                                     <!------------ Kode Otomatis Kode ---------------->
                                     <?php
-                                            $carikode = mysqli_query($con, "SELECT id_alternatif from tbl_alternatif") or die(mysqli_error($con));
-                                            $datakode = mysqli_fetch_array($carikode);
-                                            $jumlah_data = mysqli_num_rows($carikode);
-                                            if ($datakode) {
-                                                $nilaikode = substr($jumlah_data[0], 1);
-                                                $kode = (int) $nilaikode;
-                                                $kode = $jumlah_data + 1;
-                                                $kode_otomatis = "ALT" . str_pad($kode, 2, "0", STR_PAD_LEFT);
-                                            } else {
-                                                $kode_otomatis = "ALT1";
-                                            }
-                                            ?>
-                                    <!----------- Kode Otomatis Alternatif ----------->
-                                    <?php
-                                            $carikode = mysqli_query($con, "SELECT alternatif from tbl_alternatif") or die(mysqli_error($con));
-                                            $datakode = mysqli_fetch_array($carikode);
-                                            $jumlah_data = mysqli_num_rows($carikode);
-                                            if ($datakode) {
-                                                $nilaikode = substr($jumlah_data[0], 1);
-                                                $kode = (int) $nilaikode;
-                                                $kode = $jumlah_data + 1;
-                                                $alternatif = "Alternatif" . str_pad($kode, 2, "0", STR_PAD_LEFT);
-                                            } else {
-                                                $alternatif = "Alternatif1";
-                                            }
-                                            ?>
+                                    $carikode = mysqli_query($con, "SELECT id_alternatif from tbl_alternatif") or die(mysqli_error($con));
+                                    $datakode = mysqli_fetch_array($carikode);
+                                    $jumlah_data = mysqli_num_rows($carikode);
+                                    if ($datakode) {
+                                        $nilaikode = substr($jumlah_data[0], 1);
+                                        $kode = (int) $nilaikode;
+                                        $kode = $jumlah_data + 1;
+                                        $kode_otomatis = "ALT" . str_pad($kode, 2, "0", STR_PAD_LEFT);
+                                    } else {
+                                        $kode_otomatis = "ALT1";
+                                    }
+                                    ?>
                                     <!----------------------------------------- Modal Tambah ---------------------------------------------->
                                     <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -155,27 +139,6 @@ include_once('../header.php');
                                                                 <div class="form-group">
                                                                     <label class="control-label">Kode</label>
                                                                     <input class="form-control" type="text" name="id_alternatif" value="<?= $kode_otomatis; ?>" readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Alternatif</label>
-                                                                    <input class="form-control" type="text" name="alternatif" value="<?= $alternatif; ?>" readonly />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Tahun</label>
-                                                                    <select for="periode" class="custom-select mr-sm-2" name="periode" id="periode" required>
-                                                                        <option value="">--Tahun--</option>
-                                                                        <option value="2024">2024</option>
-                                                                        <option value="2023">2023</option>
-                                                                        <option value="2022">2022</option>
-                                                                        <option value="2021">2021</option>
-                                                                        <option value="2020">2020</option>
-                                                                        <option value="2019">2019</option>
-                                                                        <option value="2018">2018</option>
-                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -198,25 +161,25 @@ include_once('../header.php');
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Anak SD</label>
-                                                                    <input class="form-control" type="number" name="anak_sd" required>
+                                                                    <input class="form-control" min="0" type="number" name="anak_sd" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Anak SMP</label>
-                                                                    <input class="form-control" type="number" name="anak_smp" required>
+                                                                    <input class="form-control" min="0" type="number" name="anak_smp" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Anak SMA</label>
-                                                                    <input class="form-control" type="number" name="anak_sma" required>
+                                                                    <input class="form-control" min="0" type="number" name="anak_sma" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Ibu Hamil</label>
-                                                                    <input class="form-control" type="number" name="ibu_hamil" required>
+                                                                    <input class="form-control" min="0" type="number" name="ibu_hamil" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -224,19 +187,19 @@ include_once('../header.php');
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Balita</label>
-                                                                    <input class="form-control" type="number" name="balita" required>
+                                                                    <input class="form-control" min="0" type="number" name="balita" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Lansia</label>
-                                                                    <input class="form-control" type="number" name="lansia" required>
+                                                                    <input class="form-control" min="0" type="number" name="lansia" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Disabilitas</label>
-                                                                    <input class="form-control" type="number" name="disabilitas" required>
+                                                                    <input class="form-control" min="0" type="number" name="disabilitas" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -280,22 +243,22 @@ include_once('../header.php');
                                                                     <label class="control-label">Tahun</label>
                                                                     <select class="custom-select mr-sm-2" name="periode" id="periode" required>
                                                                         <?php
-                                                                                $periode = $data['periode'];
-                                                                                if ($periode == "2024") echo "<option value='2024' selected>2025</option>";
-                                                                                else echo "<option value='2024'>2024</option>";
-                                                                                if ($periode == "2023") echo "<option value='2023' selected>2023</option>";
-                                                                                else echo "<option value='2023'>2023</option>";
-                                                                                if ($periode == "2022") echo "<option value='2022' selected>2022</option>";
-                                                                                else echo "<option value='2022'>2022</option>";
-                                                                                if ($periode == "2021") echo "<option value='2021' selected>2021</option>";
-                                                                                else echo "<option value='2021'>2021</option>";
-                                                                                if ($periode == "2020") echo "<option value='2020' selected>2020</option>";
-                                                                                else echo "<option value='2020'>2020</option>";
-                                                                                if ($periode == "2019") echo "<option value='2019' selected>2019</option>";
-                                                                                else echo "<option value='2019'>2019</option>";
-                                                                                if ($periode == "2018") echo "<option value='2018' selected>2018</option>";
-                                                                                else echo "<option value='2018'>2018</option>";
-                                                                                ?>
+                                                                        $periode = $data['periode'];
+                                                                        if ($periode == "2024") echo "<option value='2024' selected>2025</option>";
+                                                                        else echo "<option value='2024'>2024</option>";
+                                                                        if ($periode == "2023") echo "<option value='2023' selected>2023</option>";
+                                                                        else echo "<option value='2023'>2023</option>";
+                                                                        if ($periode == "2022") echo "<option value='2022' selected>2022</option>";
+                                                                        else echo "<option value='2022'>2022</option>";
+                                                                        if ($periode == "2021") echo "<option value='2021' selected>2021</option>";
+                                                                        else echo "<option value='2021'>2021</option>";
+                                                                        if ($periode == "2020") echo "<option value='2020' selected>2020</option>";
+                                                                        else echo "<option value='2020'>2020</option>";
+                                                                        if ($periode == "2019") echo "<option value='2019' selected>2019</option>";
+                                                                        else echo "<option value='2019'>2019</option>";
+                                                                        if ($periode == "2018") echo "<option value='2018' selected>2018</option>";
+                                                                        else echo "<option value='2018'>2018</option>";
+                                                                        ?>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -311,25 +274,25 @@ include_once('../header.php');
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Anak SD</label>
-                                                                    <input class="form-control" type="number" name="anak_sd" value="<?= $data['anak_sd']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="anak_sd" value="<?= $data['anak_sd']; ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Anak SMP</label>
-                                                                    <input class="form-control" type="number" name="anak_smp" value="<?= $data['anak_smp']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="anak_smp" value="<?= $data['anak_smp']; ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Anak SMA</label>
-                                                                    <input class="form-control" type="number" name="anak_sma" value="<?= $data['anak_sma']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="anak_sma" value="<?= $data['anak_sma']; ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Ibu Hamil</label>
-                                                                    <input class="form-control" type="number" name="ibu_hamil" value="<?= $data['ibu_hamil']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="ibu_hamil" value="<?= $data['ibu_hamil']; ?>" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -337,19 +300,19 @@ include_once('../header.php');
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Balita</label>
-                                                                    <input class="form-control" type="number" name="balita" value="<?= $data['balita']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="balita" value="<?= $data['balita']; ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Lansia</label>
-                                                                    <input class="form-control" type="number" name="lansia" value="<?= $data['lansia']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="lansia" value="<?= $data['lansia']; ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label class="control-label">Disabilitas</label>
-                                                                    <input class="form-control" type="number" name="disabilitas" value="<?= $data['disabilitas']; ?>" required>
+                                                                    <input class="form-control" min="0" type="number" name="disabilitas" value="<?= $data['disabilitas']; ?>" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -421,22 +384,22 @@ include_once('../header.php');
                 if (@$_POST['pencarian'] == '') { ?>
                     <div class="float-left;">
                         <?php
-                            $jml = mysqli_num_rows(mysqli_query($con, $queryJml));
-                            echo "Jumlah Data : <b>$jml</b>";
-                            ?>
+                        $jml = mysqli_num_rows(mysqli_query($con, $queryJml));
+                        echo "Jumlah Data : <b>$jml</b>";
+                        ?>
                     </div>
                     <div class="float-right">
                         <ul class="pagination pagination-sm">
                             <?php
-                                $jml_hal = ceil($jml / $batas);
-                                for ($i = 1; $i <= $jml_hal; $i++) {
-                                    if ($i != $hal) {
-                                        echo "<li><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
-                                    } else {
-                                        echo "<li class=\"page-item active\"><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
-                                    }
+                            $jml_hal = ceil($jml / $batas);
+                            for ($i = 1; $i <= $jml_hal; $i++) {
+                                if ($i != $hal) {
+                                    echo "<li><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
+                                } else {
+                                    echo "<li class=\"page-item active\"><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
                                 }
-                                ?>
+                            }
+                            ?>
                         </ul>
                     </div>
                 <?php

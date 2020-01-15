@@ -176,21 +176,47 @@
                     <?php else : ?>
                         <button disabled="disabled" class="btn btn-primary">Sudah Tampil</button>
                     <?php endif ?>
-                    <?php
-                    $ambil = mysqli_query($con, "SELECT * FROM tbl_proses_memcdm");
-                    $detail = $ambil->fetch_assoc();
-                    if (!empty($detail)) : ?>
-                        <button disabled="disabled" class="btn btn-primary">Sudah Diproses</button>
-                    <?php else : ?>
-                        <a href="<?= base_url('models/Proses/Proses.php'); ?>" class="btn btn-primary" id="proses">Proses Penilaian</a>
-                    <?php endif ?>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#filterModal"> Proses</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <?php include_once('../footer.php'); ?>
-<!----------------------------------- Modal Reset ------------------------->
+
+<div class="modal fade" id="filterModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Proses Filter</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <form action="<?= base_url('models/Proses/Proses.php?act=submit'); ?>" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">Periode</label>
+                        <select for="periode" class="custom-select mr-sm-2" name="periode" id="periode" required>
+                            <option value="">--Tahun--</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="submit" class="btn btn-success">Proses</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="modal fade" id="resetModal" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

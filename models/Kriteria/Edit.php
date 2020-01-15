@@ -1,11 +1,10 @@
 <?php
 require_once '../../config/config.php';
 if ($_GET['act'] == 'submit') {
-    $kode       = $_POST['kode'];
     $kriteria   = $_POST['kriteria'];
     $keterangan = $_POST['keterangan'];
 }
-$query = mysqli_query($con, "UPDATE tbl_kriteria SET kriteria='$kriteria', keterangan='$keterangan' WHERE kode='$kode'");
+$query = mysqli_query($con, "UPDATE tbl_kriteria SET kriteria='$kriteria', keterangan='$keterangan' WHERE kriteria='$kriteria'");
 if ($query) {
     $_SESSION['message'] = "Data berhasil diedit!";
     $_SESSION['msg_type'] = "primary";

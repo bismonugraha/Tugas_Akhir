@@ -5,9 +5,9 @@
         if (isset($_SESSION['message'])) : ?>
             <div class="alert alert-<?= $_SESSION['msg_type'] ?> col-md-3 text-center" role="alert">
                 <?php
-                    echo $_SESSION['message'];
-                    unset($_SESSION['message']);
-                    ?>
+                echo $_SESSION['message'];
+                unset($_SESSION['message']);
+                ?>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -61,7 +61,6 @@
                         <thead>
                             <tr class="text-center">
                                 <th>No</th>
-                                <th>Kode</th>
                                 <th>Kriteria</th>
                                 <th>Keterangan</th>
                                 <th>Aksi</th>
@@ -71,10 +70,9 @@
                             <?php
                             if ($query_run) {
                                 foreach ($query_run as $data) {
-                                    ?>
+                            ?>
                                     <tr class="text-center">
                                         <td><?= $no++; ?></td>
-                                        <td><?= $data['kode']; ?></td>
                                         <td><?= $data['kriteria']; ?></td>
                                         <td><?= $data['keterangan']; ?></td>
                                         <td>
@@ -85,18 +83,18 @@
                                     </tr>
                                     <!------------ Kode Otomatis Kode ---------------->
                                     <?php
-                                            $carikode = mysqli_query($con, "SELECT id_kriteria from tbl_kriteria") or die(mysqli_error($con));
-                                            $datakode = mysqli_fetch_array($carikode);
-                                            $jumlah_data = mysqli_num_rows($carikode);
-                                            if ($datakode) {
-                                                $nilaikode = substr($jumlah_data[0], 1);
-                                                $kode = (int) $nilaikode;
-                                                $kode = $jumlah_data + 1;
-                                                $kode_otomatis = str_pad($kode, 1, STR_PAD_LEFT);
-                                            } else {
-                                                $kode_otomatis = "1";
-                                            }
-                                            ?>
+                                    $carikode = mysqli_query($con, "SELECT id_kriteria from tbl_kriteria") or die(mysqli_error($con));
+                                    $datakode = mysqli_fetch_array($carikode);
+                                    $jumlah_data = mysqli_num_rows($carikode);
+                                    if ($datakode) {
+                                        $nilaikode = substr($jumlah_data[0], 1);
+                                        $kode = (int) $nilaikode;
+                                        $kode = $jumlah_data + 1;
+                                        $kode_otomatis = str_pad($kode, 1, STR_PAD_LEFT);
+                                    } else {
+                                        $kode_otomatis = "1";
+                                    }
+                                    ?>
                                     <!----------------------------------- Modal Tambah ------------------------->
                                     <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -110,10 +108,6 @@
                                                         <div class="form-group">
                                                             <label class="control-label">ID</label>
                                                             <input class="form-control" type="text" name="id_kriteria" value="<?= $kode_otomatis; ?>" readonly>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">Kode</label>
-                                                            <input class="form-control" type="text" name="kode" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Kriteria</label>
@@ -143,10 +137,6 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="<?= base_url('models/Kriteria/Edit.php?act=submit'); ?>" class="form-horizontal" method="POST" id="form-save">
-                                                        <div class="form-group">
-                                                            <label class="control-label">Kode</label>
-                                                            <input class="form-control" type="text" name="kode" value="<?= $data['kode']; ?>" readonly>
-                                                        </div>
                                                         <div class="form-group">
                                                             <label class="control-label">Kriteria</label>
                                                             <input class="form-control" type="text" name="kriteria" value="<?= $data['kriteria']; ?>" required />
@@ -197,22 +187,22 @@
                 if (@$_POST['pencarian'] == '') { ?>
                     <div class="float-left;">
                         <?php
-                            $jml = mysqli_num_rows(mysqli_query($con, $queryJml));
-                            echo "Jumlah Data : <b>$jml</b>";
-                            ?>
+                        $jml = mysqli_num_rows(mysqli_query($con, $queryJml));
+                        echo "Jumlah Data : <b>$jml</b>";
+                        ?>
                     </div>
                     <div class="float-right">
                         <ul class="pagination pagination-sm">
                             <?php
-                                $jml_hal = ceil($jml / $batas);
-                                for ($i = 1; $i <= $jml_hal; $i++) {
-                                    if ($i != $hal) {
-                                        echo "<li><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
-                                    } else {
-                                        echo "<li class=\"page-item active\"><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
-                                    }
+                            $jml_hal = ceil($jml / $batas);
+                            for ($i = 1; $i <= $jml_hal; $i++) {
+                                if ($i != $hal) {
+                                    echo "<li><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
+                                } else {
+                                    echo "<li class=\"page-item active\"><a class=\"page-link\" href=\"?hal=$i\">$i</a></li>";
                                 }
-                                ?>
+                            }
+                            ?>
                         </ul>
                     </div>
                 <?php
